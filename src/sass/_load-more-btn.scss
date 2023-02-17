@@ -1,0 +1,25 @@
+.load-more {
+    display: block;
+    margin: 20px auto;
+    padding: 7px 15px;
+    
+    font-size: 20px;
+    color: white;
+
+    background-color: rgb(84, 84, 221);
+    border-radius: 5px;
+    border-color: rgb(4, 4, 187);
+
+    -webkit-box-shadow: 0px 3px 10px -3px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 3px 10px -3px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 3px 10px -3px rgba(0, 0, 0, 0.75);
+
+    transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);;
+}
+
+.load-more:hover, .load-more:focus {
+    -webkit-box-shadow: 0px 3px 10px -1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 3px 10px -1px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 6px 10px -1px rgba(0, 0, 0, 0.75);
+}
+

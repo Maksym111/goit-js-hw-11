@@ -9,8 +9,12 @@
 
 .photo-card {
     margin: 10px;
-    -webkit-box-shadow: 0px 4px 10px 6px rgba(0, 0, 0, 0.75);
-        -moz-box-shadow: 0px 4px 10px 6px rgba(0, 0, 0, 0.75);
+
+    text-decoration: none;
+    color: black;
+
+    -webkit-box-shadow: 0px 3px 10px -3px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 0px 3px 10px -3px rgba(0, 0, 0, 0.75);
         box-shadow: 0px 3px 10px -3px rgba(0, 0, 0, 0.75);
 }
 

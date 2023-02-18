@@ -5,6 +5,8 @@ import LoadMoreBtn from './load-more-btn';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
+import InfiniteScroll from 'infinite-scroll';
+
 const refs = {
   searchForm: document.querySelector('#search-form'),
   galleryEl: document.querySelector('.gallery'),
@@ -34,22 +36,23 @@ async function onSearchForm(e) {
 
   clearGallery();
   imagesApiService.resetPage();
+
   await insertMarcup();
 
   imageLightBox.refresh();
 }
 
 async function insertMarcup() {
-  await imagesApiService.fetchRequest().then(elements => {
-    if (elements === undefined || elements.length === 0) {
-      loadMoreBtnEl.hide();
-      return;
-    }
-    refs.galleryEl.insertAdjacentHTML('beforeend', createElem(elements));
+  const elements = await imagesApiService.fetchRequest();
 
-    loadMoreBtnEl.enable();
-    refs.scrollBtn.classList.remove('btn-hide');
-  });
+  if (elements === undefined || elements.length === 0) {
+    loadMoreBtnEl.hide();
+    return;
+  }
+  refs.galleryEl.insertAdjacentHTML('beforeend', createElem(elements));
+
+  loadMoreBtnEl.enable();
+  refs.scrollBtn.classList.remove('btn-hide');
 }
 
 function clearGallery() {
@@ -73,3 +76,16 @@ function onScrollUpClick() {
     behavior: 'smooth',
   });
 }
+
+// let infScroll = new InfiniteScroll(refs.galleryEl, {
+//   path: getPenPath,
+//   append: '.post',
+//   history: false,
+// });
+
+// function getPenPath() {
+//   let slug = a[this.loadCount];
+//   if (slug) {
+//     return `/desandro/debug/${slug}`;
+//   }
+// }

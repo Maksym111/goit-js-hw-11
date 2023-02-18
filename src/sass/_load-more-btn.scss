@@ -23,3 +23,8 @@
     box-shadow: 0px 6px 10px -1px rgba(0, 0, 0, 0.75);
 }
 
+.load-more:disabled {
+    cursor: default;
+    opacity: 0.5;
+    box-shadow: none;
+}

@@ -8,6 +8,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 const refs = {
   searchForm: document.querySelector('#search-form'),
   galleryEl: document.querySelector('.gallery'),
+  scrollBtn: document.querySelector('[data-action="scroll-up"]'),
 };
 
 const imagesApiService = new ImagesApiService();
@@ -15,15 +16,15 @@ const loadMoreBtnEl = new LoadMoreBtn({
   selector: '[data-action="load-more-js"]',
   hidden: true,
 });
-
-refs.searchForm.addEventListener('submit', onSearchForm);
-loadMoreBtnEl.refs.button.addEventListener('click', onLoadMoreClick);
-
-const image = new SimpleLightbox('.gallery a', {
+const imageLightBox = new SimpleLightbox('.gallery a', {
   scrollZoom: false,
 });
 
-function onSearchForm(e) {
+refs.searchForm.addEventListener('submit', onSearchForm);
+loadMoreBtnEl.refs.button.addEventListener('click', onLoadMoreClick);
+refs.scrollBtn.addEventListener('click', onScrollUpClick);
+
+async function onSearchForm(e) {
   e.preventDefault();
 
   imagesApiService.query = e.currentTarget.elements.searchQuery.value;
@@ -33,15 +34,13 @@ function onSearchForm(e) {
 
   clearGallery();
   imagesApiService.resetPage();
-  insertMarcup();
+  await insertMarcup();
 
-  // console.log(image);
-
-  // showLargeImg();
+  imageLightBox.refresh();
 }
 
-function insertMarcup() {
-  imagesApiService.fetchRequest().then(elements => {
+async function insertMarcup() {
+  await imagesApiService.fetchRequest().then(elements => {
     if (elements === undefined || elements.length === 0) {
       loadMoreBtnEl.hide();
       return;
@@ -49,18 +48,28 @@ function insertMarcup() {
     refs.galleryEl.insertAdjacentHTML('beforeend', createElem(elements));
 
     loadMoreBtnEl.enable();
+    refs.scrollBtn.classList.remove('btn-hide');
   });
 }
 
 function clearGallery() {
   refs.galleryEl.innerHTML = '';
+  refs.scrollBtn.classList.add('btn-hide');
 }
 
-function onLoadMoreClick() {
+async function onLoadMoreClick() {
   loadMoreBtnEl.disable();
-  insertMarcup();
+  await insertMarcup();
+  imageLightBox.refresh();
 }
 
-// new SimpleLightbox('.gallery a', {
-//   scrollZoom: false,
-// });
+function onScrollUpClick() {
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2.15,
+    behavior: 'smooth',
+  });
+}

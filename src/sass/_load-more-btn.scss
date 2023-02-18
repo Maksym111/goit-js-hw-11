@@ -14,7 +14,7 @@
     -moz-box-shadow: 0px 3px 10px -3px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 3px 10px -3px rgba(0, 0, 0, 0.75);
 
-    transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);;
+    transition: box-shadow var(--transition--standart);
 }
 
 .load-more:hover, .load-more:focus {
